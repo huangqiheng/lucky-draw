@@ -1,0 +1,47 @@
+#!/bin/sh
+
+version=ngx_openresty-1.4.2.9
+filename=$version.tar.gz
+down_zip=http://openresty.org/download/$filename
+current_path=$(pwd)
+prefix=`dirname $(pwd)`/
+nginx=/usr/local/openresty/nginx/sbin/nginx
+build_dir=build_temp
+
+cd $current_path
+
+if [ ! -d "$build_dir" ]; then
+	mkdir $build_dir
+fi
+cd $build_dir
+
+gunzip_dir=nginx-gunzip
+gunzip_path=$current_path/$build_dir/$gunzip_dir
+if [ ! -f "$gunzip_dir.bundle" ]; then
+	git clone https://github.com/huangqiheng/$gunzip_dir.git
+	cd $gunzip_dir
+	git bundle create $gunzip_dir.bundle HEAD
+	mv $gunzip_dir.bundle ../
+	cd ..
+else
+	git clone $gunzip_dir.bundle
+fi
+
+nginx_src_path=$current_path/$build_dir/$version
+if [ ! -f "$filename" ]; then
+	wget $down_zip
+	tar xzvf $filename
+else
+	tar xzvf $filename
+fi
+cd $nginx_src_path
+
+apt-get install -y libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl make
+
+./configure --with-luajit --with-http_sub_module --add-module=$gunzip_path
+make
+make install
+
+rm -rf $gunzip_path
+rm -rf $nginx_src_path
+

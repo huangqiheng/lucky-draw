@@ -1,0 +1,6 @@
+#!/bin/sh
+
+nginx=/usr/local/openresty/nginx/sbin/nginx
+prefix=`dirname $(pwd)`/
+current_path=$(pwd)
+$nginx -p $prefix -c $current_path/nginx.conf
