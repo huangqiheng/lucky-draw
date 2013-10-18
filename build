@@ -38,7 +38,7 @@ cd $nginx_src_path
 
 apt-get install -y libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl make
 
-./configure --with-luajit --with-http_sub_module --add-module=$gunzip_path
+./configure --with-luajit --with-http_sub_module --add-module=$gunzip_path --with-debug
 make
 make install
 
