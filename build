@@ -3,8 +3,7 @@
 version=ngx_openresty-1.4.2.9
 filename=$version.tar.gz
 down_zip=http://openresty.org/download/$filename
-current_path=$(pwd)
-prefix=`dirname $(pwd)`/
+current_path=`dirname $(readlink -f $0)`
 nginx=/usr/local/openresty/nginx/sbin/nginx
 build_dir=build_temp
 

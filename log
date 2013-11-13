@@ -1,0 +1,20 @@
+#!/bin/sh
+
+current_path=`dirname $(readlink -f $0)`
+prefix=`dirname $current_path`
+logpath=$prefix/logs
+
+if [ $1 = "clean" ]; then
+	rm $logpath/*.log
+	exit
+fi
+
+if [ $1 = "error" ]; then
+	less $logpath/error.log
+	exit
+fi
+
+if [ $1 = "access" ]; then
+	less $logpath/access.log
+	exit
+fi
