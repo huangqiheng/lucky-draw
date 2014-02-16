@@ -5,16 +5,16 @@ prefix=`dirname $current_path`
 logpath=$prefix/logs
 
 if [ $1 = "clean" ]; then
-	rm $logpath/*.log
+	truncate $logpath/*.log --size 0
 	exit
 fi
 
 if [ $1 = "error" ]; then
-	less $logpath/error.log
+	tail -f $logpath/error.log
 	exit
 fi
 
 if [ $1 = "access" ]; then
-	less $logpath/access.log
+	tail -f $logpath/access.log
 	exit
 fi

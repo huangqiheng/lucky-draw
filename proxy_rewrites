@@ -1,0 +1,9 @@
+set $do_write 0;
+
+if ($http_host = dtcq.appgame.com) {
+	set $do_write 1;
+}
+
+if ($do_write = 1) {
+	rewrite  (.*)  /OMPROXY$1;
+}
